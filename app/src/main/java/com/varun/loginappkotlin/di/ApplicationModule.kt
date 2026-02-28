@@ -53,12 +53,6 @@ object ApplicationModule {
         return LoginRepository(networkService, userPreferences)
     }
 
-
-//    @Provides
-//    @Singleton
-//    public LoginRepository loginRepository(APIService apiService) {
-//        return new LoginRepository(apiService);
-//    }
     @Provides
     fun provideUserRepository(
         networkService: NetworkService, userPreferences: UserPreferences

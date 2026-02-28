@@ -1,7 +1,6 @@
 package com.varun.loginappkotlin.data.remote
 
 import com.varun.loginappkotlin.data.remote.request.DataRequest
-import com.varun.loginappkotlin.data.remote.request.RegistrationRequest
 import com.varun.loginappkotlin.data.remote.response.LoginResponse
 import com.varun.loginappkotlin.data.remote.response.RegistrationResponse
 import com.varun.loginappkotlin.data.remote.response.UsersResponse
@@ -17,34 +16,30 @@ import retrofit2.http.POST
  *
  * */
 interface NetworkService {
-
+    //LOGIN REQUEST
     @Headers(
         "x-api-key: pub_e6f930df0e1a3dd57d1bf4563223c6f8f9f4d4ebd7da133e6aa082df5006ec51",
         "Content-Type: application/json"
     )
-    @POST(Endpoints.loginurl)
+    @POST(Endpoints.LOGIN_URL)
     suspend fun login(
         @Body  dataRequest: DataRequest): Response<LoginResponse>
 
+    //REGISTRATION REQUEST
     @Headers(
         "x-api-key: pub_e6f930df0e1a3dd57d1bf4563223c6f8f9f4d4ebd7da133e6aa082df5006ec51",
         "Content-Type: application/json"
     )
-    @POST(Endpoints.registerurl)
+    @POST(Endpoints.REGISTER_URL)
     suspend fun register(
-        @Body  registrationRequest: RegistrationRequest): Response<RegistrationResponse>
+        @Body  registrationRequest: DataRequest): Response<RegistrationResponse>
 
-//    @Body  dataRequest: DataRequest): Call<LoginResponse>
-
+    //USERS REQUEST
     @Headers(
         "x-api-key: pub_e6f930df0e1a3dd57d1bf4563223c6f8f9f4d4ebd7da133e6aa082df5006ec51",
         "Content-Type: application/json"
     )
-    @GET(Endpoints.usersurl)
+    @GET(Endpoints.USERS_URL)
     suspend fun users(): Response<UsersResponse>
 
-//    @POST(Endpoints.registerurl)
-//    suspend fun getScorecard(
-//        @Query("apikey") token: String, @Query("id") id: String
-//    ): Response<ScorecardDetailsResponse>
 }

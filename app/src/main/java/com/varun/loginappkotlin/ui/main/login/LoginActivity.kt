@@ -1,4 +1,4 @@
-package com.varun.loginappkotlin.ui.main
+package com.varun.loginappkotlin.ui.main.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,12 +7,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.airbnb.lottie.LottieAnimationView
 import com.varun.loginappkotlin.R
-import com.varun.loginappkotlin.data.remote.request.DataRequest
+import com.varun.loginappkotlin.ui.main.homepage.RecyclerViewHomeActivity
+import com.varun.loginappkotlin.ui.main.registration.RegistrationActivity
 import com.varun.loginappkotlin.utils.common.Toaster
 import com.varun.loginappkotlin.utils.common.Validator
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,8 @@ class LoginActivity: AppCompatActivity() {
      private var tvLoginResult: TextView? = null
      private var bLogin: Button? = null
     private var bRegister: Button? = null
+    private var progressbar : LottieAnimationView? = null
+
 
     private var loginViewModel: LoginViewModel? = null
 
@@ -32,54 +35,49 @@ class LoginActivity: AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        ((MyApp) getApplication()).appComponent.inject(this);
         // Tells Dagger to inject @Inject fields
 
         super.onCreate(savedInstanceState)
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         //activityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         setContentView(R.layout.activity_login)
-        Toaster.show(this@LoginActivity,"LOGIN Activity" )
+
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById<EditText>(R.id.etPassword)
         tvLoginResult = findViewById(R.id.tvLoginResult)
         bLogin = findViewById(R.id.bLogin)
         bRegister = findViewById<Button>(R.id.bRegister)
+        progressbar = findViewById<LottieAnimationView>(R.id.progressBarView)
 
         // activityLoginBinding.setLoginBinding(getData());
 
-//        loginViewModel = new ViewModelProvider(this,loginVMFactory).get(LoginViewModel.class);
-//
+        etEmail!!.setText("eve.holt@reqres.in")
+        etPassword!!.setText("cityslicka")
 
         loginViewModel!!.getloginResponse.observe(
             this,
             Observer { token = it.data?.token
-
 
                 tvLoginResult!!.setText("Login Success")
                 Toaster.show(
                     this@LoginActivity,
                     "Login Successfully"
                 )
-                Log.e( "LoginActivity: ", "Login Successfully")
                 startActivity(
                     Intent(
                         this@LoginActivity,
                         RecyclerViewHomeActivity::class.java
                     )
                 )
-//                if (voidLoginResponse.data) {
-//                    Log.e("login onChanged: activity ", voidLoginResponse)
-//
+                finish()
 
-
-
-//                startActivity(new Intent(getApplicationContext(), ListViewHomeActivity.class));
-
-//                    finish()
-//                }
             })
         bLogin!!.setOnClickListener(View.OnClickListener {
+            loginViewModel!!.loading.observe(this, Observer {
+                progressbar?.visibility = if (it) View.VISIBLE else View.GONE
+            if (it) progressbar?.playAnimation()
+            else progressbar?.cancelAnimation()
+        })
             if (etEmail!!.text.toString().isEmpty() || etPassword!!.text.toString().isEmpty()) {
                 Toaster.show(
                     this@LoginActivity,
@@ -93,15 +91,14 @@ class LoginActivity: AppCompatActivity() {
                                            "Please enter valid Credentials",
                     )
                } else {
-                   etEmail!!.setText("eve.holt@reqres.in")
-                    etPassword!!.setText("cityslicka")
                     loginViewModel!!.getLogin(etEmail!!.text.toString(), etPassword!!.text.toString())
+
             }
+
         })
 
         bRegister!!.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@LoginActivity, RegistrationActivity::class.java)
-//            intent.putExtra("TOKEN", token)
             startActivity(intent)
         })
     }

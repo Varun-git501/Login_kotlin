@@ -1,4 +1,4 @@
-package com.varun.loginappkotlin.ui.main
+package com.varun.loginappkotlin.ui.main.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

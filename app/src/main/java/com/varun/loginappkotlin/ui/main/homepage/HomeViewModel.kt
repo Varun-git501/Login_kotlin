@@ -1,13 +1,11 @@
-package com.varun.loginappkotlin.ui.main
+package com.varun.loginappkotlin.ui.main.homepage
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.varun.loginappkotlin.data.remote.response.LoginResponse
 import com.varun.loginappkotlin.data.remote.response.UsersResponse
 import com.varun.loginappkotlin.data.repository.UserRepository
 import com.varun.loginappkotlin.utils.common.Resource
-import com.varun.loginappkotlin.utils.common.Toaster
 import com.varun.loginappkotlin.utils.network.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,7 +22,7 @@ class HomeViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
     val loading: MutableLiveData<Boolean> = MutableLiveData()
-    private val xAuth = userRepository.getAccessToken()
+//    private val xAuth = userRepository.getAccessToken()
     public val getloginResponse: MutableLiveData<Resource<UsersResponse>> =
         MutableLiveData()
     private val messageString: MutableLiveData<Resource<String>> = MutableLiveData()
@@ -36,7 +34,6 @@ class HomeViewModel @Inject constructor(
 
                 val response = userRepository.getAllUsers()
                 if (response.isSuccessful) {
-//                    Toaster.show(context , response.body().toString())
                     getloginResponse.postValue(Resource.success(response.body()))
                 } else {
                     messageString.postValue(Resource.error(response.body().toString()))

@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.LoginActivity">
-
+    tools:context=".ui.main.login.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,6 +64,18 @@
             android:text="Not login in"
             android:textSize="18sp" />
         <!--    android:text="@{loginBinding.email}"-->
-    </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/progressBarView"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:elevation="8dp"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

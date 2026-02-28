@@ -79,8 +79,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-
-
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
@@ -130,6 +128,7 @@ dependencies {
 
     //Glide
     implementation(libs.androidx.glide)
+
 
     //Recyclerview
     implementation(libs.androidx.recyclerview)

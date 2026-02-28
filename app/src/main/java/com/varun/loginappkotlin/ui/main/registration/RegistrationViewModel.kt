@@ -1,12 +1,10 @@
-package com.varun.loginappkotlin.ui.main
+package com.varun.loginappkotlin.ui.main.registration
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.varun.loginappkotlin.data.remote.NetworkService
-import com.varun.loginappkotlin.data.remote.response.LoginResponse
 import com.varun.loginappkotlin.data.remote.response.RegistrationResponse
-import com.varun.loginappkotlin.data.repository.LoginRepository
 import com.varun.loginappkotlin.data.repository.RegistrationRepository
 import com.varun.loginappkotlin.utils.common.Resource
 import com.varun.loginappkotlin.utils.network.NetworkHelper
@@ -21,8 +19,8 @@ class RegistrationViewModel @Inject constructor(
     private val registrationRepository: RegistrationRepository,
 ) : ViewModel() {
     val loading: MutableLiveData<Boolean> = MutableLiveData()
-    private val xAuth = registrationRepository.getAccessToken()
-    private val xAuthId = registrationRepository.getId()
+//    private val xAuth = registrationRepository.getAccessToken()
+//    private val xAuthId = registrationRepository.getId()
     val getRegistrationResponse: MutableLiveData<Resource<RegistrationResponse>> =
         MutableLiveData()
     private val messageString: MutableLiveData<Resource<String>> = MutableLiveData()
@@ -35,11 +33,10 @@ class RegistrationViewModel @Inject constructor(
                 val response = registrationRepository.registrationBody(email,password)
                 if (response.isSuccessful) {
                     getRegistrationResponse.postValue(Resource.success(response.body()))
-                    registrationRepository.saveAccessToken(response.body()?.token.toString())
-                    response.body()?.id?.let { registrationRepository.setId(it.toInt() ) }
+                    //registrationRepository.saveAccessToken(response.body()?.token.toString())
+//                    response.body()?.id?.let { registrationRepository.setId(it.toInt() ) }
                 } else {
                     messageString.postValue(Resource.error(response.body()?.token.toString()))
-//                    messageString.postValue(Resource.error(response.body()?.id.toInt()))
                 }
                 loading.postValue(false)
             }

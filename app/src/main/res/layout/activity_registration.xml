@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ui.main.RegistrationActivity">
+    tools:context=".ui.main.registration.RegistrationActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,8 +64,6 @@
         android:text="Register"
         />
 
-
-
     <TextView
         android:id="@+id/tvRegisterResult"
         android:layout_width="wrap_content"
@@ -73,4 +71,18 @@
         android:layout_gravity="center_horizontal"
         android:text="Not Register in"
         android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/progressBarView"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:visibility="gone"
+            android:elevation="8dp"
+            />
+
+    </LinearLayout>
 </LinearLayout>

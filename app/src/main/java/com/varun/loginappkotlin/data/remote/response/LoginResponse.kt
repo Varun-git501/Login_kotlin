@@ -7,8 +7,4 @@ data class LoginResponse(
     @field:SerializedName("token")
     val token: String? = null
 
-
-//
-//    @field:SerializedName("data")
-//    val list: List<DataList?>? = emptyList()
 )

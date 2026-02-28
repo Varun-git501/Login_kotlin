@@ -1,4 +1,4 @@
-package com.varun.loginappkotlin.ui.main
+package com.varun.loginappkotlin.ui.main.homepage
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.varun.loginappkotlin.data.remote.response.DataList
 import com.varun.loginappkotlin.databinding.ActivityHomeBinding
+import com.varun.loginappkotlin.ui.main.DataAdapter
 import com.varun.loginappkotlin.utils.common.Toaster
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,46 +27,37 @@ class RecyclerViewHomeActivity : AppCompatActivity() {
     private var dataList: ArrayList<DataList?> = ArrayList<DataList?>()
     private lateinit var binding: ActivityHomeBinding
     private val viewModel: HomeViewModel by viewModels()
+//    private var progressbar : LottieAnimationView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.e( "RecyclerViewHomeActivity: ", " RecyclerViewHomeActivity")
+//        progressbar = findViewById<LottieAnimationView>(R.id.progressBar)
 
-        Toaster.show(this@RecyclerViewHomeActivity,"RecyclerViewHomeActivity")
         initializeRecyclerView()
-//        initializeObservers()
+        initializeObservers()
     }
 
 
     private fun initializeRecyclerView() {
         dataAdapter = DataAdapter(this, dataList)
-//        Log.e( "initializeRecyclerView: ", dataList.toString())
-
-//        Toaster.show(this@RecyclerViewHomeActivity, dataList.toString())
 
         binding.recyclerView.apply {
             dashboardManager = LinearLayoutManager(context)
             layoutManager = dashboardManager
             adapter = dataAdapter
         }
-
-//        binding.rvDataitems.apply {
-//            dashboardManager = LinearLayoutManager(this)
-//            layoutManager = dashboardManagers
-//            adapter = dataAdapter
-//        }
         viewModel.getCurrentMatches()
     }
 
     private fun initializeObservers() {
-//        viewModel.loading.observe(this, Observer {
+        viewModel.loading.observe(this, Observer {
 
-//            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
-//            if (it) binding.progressBar.playAnimation()
-//            else binding.progressBar.cancelAnimation()
-//        })
-//        Log.e( "initializeObservers: ", dataList.toString())
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+            if (it) binding.progressBar.playAnimation()
+            else binding.progressBar.cancelAnimation()
+        })
 
         viewModel.getloginResponse.observe(this, Observer {
             dataList = (it.data?.list as ArrayList<DataList?>)
